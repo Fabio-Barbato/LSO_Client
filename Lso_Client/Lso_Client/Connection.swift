@@ -103,16 +103,6 @@ class NetworkManager: ObservableObject {
     }
 }
 
-struct Book: Identifiable, Codable {
-    var id: String { ISBN }
-    let title: String
-    let ISBN: String
-    let author: String
-    let genre: String
-    let copies: Int
-    let given_copies: Int
-}
-
 /*COMMAND LIST
  ADD_USER name surname username password
  LOGIN username password

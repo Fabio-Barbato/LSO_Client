@@ -78,7 +78,7 @@ struct LoginView: View {
                     
                     // Login Status Message
                     Text(loginStatus)
-                        //.padding()
+                        .padding()
                         .multilineTextAlignment(.center)
                 }
                 .onAppear {

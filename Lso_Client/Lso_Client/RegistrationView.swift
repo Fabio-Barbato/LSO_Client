@@ -58,7 +58,7 @@ struct RegistrationView: View {
             
             // Password Field
             HStack {
-                TextField("Enter your password", text: $password)
+                SecureField("Enter your password", text: $password)
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 10).stroke(Color("Color"), lineWidth: 2))
             }
@@ -68,7 +68,9 @@ struct RegistrationView: View {
             // Register Button
             HStack {
                 Button(action: {
-                    register(name: name, surname: surname, username: username, password: password)
+                    Task{
+                        await register()
+                    }
                 }) {
                     Text("Register")
                         .foregroundColor(.black)
@@ -83,7 +85,6 @@ struct RegistrationView: View {
             
             // Registration Status Message
             Text(registrationStatus)
-                .foregroundColor(.white)
                 .padding()
                 .multilineTextAlignment(.center)
             
@@ -92,18 +93,18 @@ struct RegistrationView: View {
             .padding()}.scrollDismissesKeyboard(.interactively)
     }
     
-    func register(name: String, surname: String, username: String, password: String) {
+    func register() async {
         guard !name.isEmpty, !surname.isEmpty, !username.isEmpty, !password.isEmpty else {
-            registrationStatus = "Please fill in all fields and make sure passwords match."
+            registrationStatus = "Please fill in all fields"
             return
         }
         
-        let message = "ADD_USER \(name) \(surname) \(username) \(password)"
-        if let messageData = message.data(using: .utf8) {
-            networkManager.send(data: messageData)
+        let response = await networkManager.register(name: name, surname: surname, username: username, password: password)
+        
+        registrationStatus = response
         }
     }
-}
+
 
 #Preview {
     RegistrationView()

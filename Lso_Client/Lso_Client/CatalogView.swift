@@ -12,25 +12,48 @@ struct CatalogView: View {
 
     var body: some View {
         NavigationStack {
-            List(networkManager.bookCatalog) { book in
-                VStack(alignment: .leading) {
-                    Text(book.title)
-                        .font(.headline)
-                    Text("Author: \(book.author)")
-                        .font(.subheadline)
-                    Text("ISBN: \(book.ISBN)")
-                        .font(.subheadline)
-                    Text("Genre: \(book.genre)")
-                        .font(.subheadline)
-                    Text("Available Copies: \(book.copies)")
-                        .font(.subheadline)
+            if networkManager.bookCatalog.isEmpty {
+                ProgressView("Loading books...")
+                    .navigationTitle("Book Catalog")
+            } else {
+                List(networkManager.bookCatalog) { book in
+                    HStack{
+                        VStack(alignment: .leading) {
+                            Text(book.title)
+                                .font(.title)
+                            Text("Author: \(book.author)")
+                                .font(.title3)
+                            Text("ISBN: \(book.ISBN)")
+                                .font(.title3)
+                            Text("Genre: \(book.genre)")
+                                .font(.title3)
+                            Text("Available Copies: \(book.copies)")
+                                .font(.title3)
+                        }
+                        AsyncImage(url: URL(string: book.cover)) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 150, height: 250)
+                                .clipShape(.rect(cornerRadius: 8))
+                        }placeholder: {
+                            ZStack{
+                                Rectangle()
+                                    .fill(.gray)
+                                    .frame(width: 160)
+                                Text("Cover \nunavailable")
+                                    .frame(width:100,
+                                           alignment: .center)
+                                    .font(.title3)
+                            }}
+                    }
+
                 }
+                .navigationTitle("Book Catalog")
             }
-            .navigationTitle("Book Catalog")
-            .onAppear {
-                Task {
-                    await networkManager.requestBookCatalog()
-                }
+        }.onAppear {
+            Task {
+                await networkManager.requestBookCatalog()
             }
         }
     }
