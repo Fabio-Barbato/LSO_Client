@@ -1,10 +1,16 @@
+//
+//  Connection.swift
+//  Lso_Client
+//
+//  Created by Fabio Barbato on 11/08/24.
+//
+
 import Foundation
 import Network
 
 class NetworkManager: ObservableObject {
     static let shared = NetworkManager()
     @Published var bookCatalog: [Book] = []
-    private let host_ip = "192.168.1.116"
     private let host = NWEndpoint.Host("192.168.1.116")
     private let port = NWEndpoint.Port(rawValue: 8080)!
     private var connection: NWConnection?
@@ -16,7 +22,6 @@ class NetworkManager: ObservableObject {
     private func connectToServer() {
         connection = NWConnection(host: host, port: port, using: .tcp)
         connection?.start(queue: .global())
-        receive()
     }
 
     func send(data: Data) {
@@ -29,39 +34,62 @@ class NetworkManager: ObservableObject {
         })
     }
 
-    func receive() {
-        connection?.receive(minimumIncompleteLength: 1, maximumLength: 1024) { data, _, isComplete, error in
-            if let error = error {
-                print("Error receiving data: \(error.localizedDescription)")
-                return
-            }
+    func receive() async -> String {
+        return await withCheckedContinuation { continuation in
+            connection?.receive(minimumIncompleteLength: 1, maximumLength: 1024) { data, _, isComplete, error in
+                if let error = error {
+                    print("Error receiving data: \(error.localizedDescription)")
+                    continuation.resume(returning: "")
+                    return
+                }
 
-            if let data = data, !data.isEmpty {
-                let responseString = String(data: data, encoding: .utf8) ?? ""
-                print("Response received: \(responseString)")
-            }
+                if let data = data, !data.isEmpty {
+                    let responseString = String(data: data, encoding: .utf8) ?? ""
+                    print("Response received: \(responseString)")
+                    continuation.resume(returning: responseString)
+                }
 
-            if isComplete {
-                self.connection?.cancel()
-            } else {
-                self.receive()
+                if isComplete {
+                    self.connection?.cancel()
+                    continuation.resume(returning: "Complete")
+                }
             }
         }
     }
-    
 
-    func register(name: String, surname: String, username: String, password: String){
-        let message = "LOGIN \(name) \(surname) \(username) \(password)"
+    func login(username: String, password: String) async -> String {
+        let message = "LOGIN \(username) \(password)"
         if let messageData = message.data(using: .utf8) {
             send(data: messageData)
         }
-        receive()
+        
+        let response = await receive()
+        return response
     }
-    private func parseReceivedData(_ data: Data) {
-        let responseString = String(data: data, encoding: .utf8) ?? ""
-        print("Response received: \(responseString)")
 
-        // Parse JSON data
+    func register(name: String, surname: String, username: String, password: String) async -> String {
+        let message = "ADD_USER \(name) \(surname) \(username) \(password)"
+        if let messageData = message.data(using: .utf8) {
+            send(data: messageData)
+        }
+        
+        let response = await receive()
+        return response
+    }
+    
+    func requestBookCatalog() async -> String {
+        let message = "GET_BOOKS"
+        if let messageData = message.data(using: .utf8) {
+            send(data: messageData)
+        }
+        
+        let responseString = await receive()
+        parseReceivedData(responseString)
+        return responseString
+    }
+
+    private func parseReceivedData(_ responseString: String) {
+        print("Received JSON string: \(responseString)")
         if let data = responseString.data(using: .utf8) {
             do {
                 let books = try JSONDecoder().decode([Book].self, from: data)
@@ -76,7 +104,7 @@ class NetworkManager: ObservableObject {
 }
 
 struct Book: Identifiable, Codable {
-    var id = UUID()
+    var id: String { ISBN }
     let title: String
     let ISBN: String
     let author: String
@@ -84,3 +112,10 @@ struct Book: Identifiable, Codable {
     let copies: Int
     let given_copies: Int
 }
+
+/*COMMAND LIST
+ ADD_USER name surname username password
+ LOGIN username password
+ LOAN username isbn1 isbn2 isbn3...
+ GET_BOOKS
+ */
