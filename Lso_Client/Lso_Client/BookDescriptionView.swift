@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct BookDescriptionView: View {
+    @EnvironmentObject var networkManager: NetworkManager
+    @State private var showAlert = false
+    var availableCopies: Int
+    @State private var isOutOfStock = false
     var isbn: String
     var cover: String
     @State private var webReader: String?
     @State private var description: String?
     var body: some View {
         VStack{
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 AsyncImage(url: URL(string: cover)) { image in
                     image
                         .resizable()
@@ -39,7 +43,8 @@ struct BookDescriptionView: View {
                         HStack{
                             Text("Preview")
                                 .foregroundStyle(.black)
-                            Image(systemName: "book")
+                                .bold()
+                            Image(systemName: "book.fill")
                                 .foregroundStyle(.black)
                         }
                         .frame(width: 150,height:50)
@@ -57,15 +62,33 @@ struct BookDescriptionView: View {
 
                 }
                 
-                HStack{
-                    Text("Add to cart")
-                        .foregroundStyle(.black)
-                    Image(systemName: "cart.fill")
-                        .foregroundStyle(.black)
+                // Add to cart button
+                Button(action: {
+                    if availableCopies > 0 {
+                        //navigateToCheckout = true
+                    } else {
+                        isOutOfStock = true
+                        showAlert = true
+                    }
+                }) {
+                    HStack {
+                        Text("Add to cart")
+                            .foregroundStyle(.black)
+                            .bold()
+                        Image(systemName: "cart.fill")
+                            .foregroundStyle(.black)
+                    }
+                    .frame(width: 150, height: 50)
+                    .background(isOutOfStock ? Color.red : Color("Color"))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                .frame(width: 150,height:50)
-                .background(Color("Color"))
-                .clipShape(.rect(cornerRadius: 10))
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Out of Stock"),
+                        message: Text("There are no copies left for this book"),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
 
                 Divider()
                 Text("Description")
@@ -76,6 +99,7 @@ struct BookDescriptionView: View {
                 Text(description ?? "Description unavailable")
                     .font(.title2)
                     .padding(.horizontal)
+                    .multilineTextAlignment(.center)
                 
             }
         }
@@ -83,11 +107,10 @@ struct BookDescriptionView: View {
             loadData(isbn: isbn){ book_component in
                 description = book_component.first as? String
                 webReader = book_component.last as? String
+                if availableCopies == 0 {
+                    isOutOfStock = true
+                }
             }
         }
     }
-}
-
-#Preview {
-    BookDescriptionView(isbn: "9788858513477", cover: "https://www.ibs.it/images/9788868368593_0_536_0_75.jpg")
 }

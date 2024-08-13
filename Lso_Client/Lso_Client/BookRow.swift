@@ -12,7 +12,7 @@ struct BookRow: View {
     let book: Book
 
     var body: some View {
-        NavigationLink(destination: BookDescriptionView(isbn: book.ISBN,cover: book.cover)){
+        NavigationLink(destination: BookDescriptionView(availableCopies: book.copies, isbn: book.ISBN,cover: book.cover)){
             HStack(alignment: .top) {
                 AsyncImage(url: URL(string: book.cover)) { image in
                     image

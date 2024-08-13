@@ -14,6 +14,7 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var loginStatus: String = ""
     @State private var navigateToCatalog = false
+    @State private var showAlert = false
 
     var body: some View {
         NavigationStack {
@@ -63,6 +64,12 @@ struct LoginView: View {
                             .background(Color("Color"))
                             .foregroundColor(.black)
                             .cornerRadius(10)
+                    }.alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Failed Login"),
+                            message: Text(loginStatus),
+                            dismissButton: .default(Text("OK"))
+                        )
                     }
                     
                     NavigationLink(destination: RegistrationView()) {
@@ -76,16 +83,6 @@ struct LoginView: View {
                     }
                 }
                 .padding(.horizontal, 20)
-
-                // Login Status Message
-                if !loginStatus.isEmpty {
-                    Text(loginStatus)
-                        .padding()
-                        .foregroundColor(loginStatus.contains("failed") ? .red : .green)
-                        .multilineTextAlignment(.center)
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: loginStatus)
-                }
                 
                 Spacer()
             }
@@ -98,25 +95,39 @@ struct LoginView: View {
                 LibraryView(username: username)
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
+            .contentShape(Rectangle()) // Needed for the gesture to be recognized in empty spaces
+            .gesture(
+                TapGesture()
+                    .onEnded { _ in
+                        dismissKeyboard()
+                    }
+            )
         }
     }
-
+    // Function to dismiss the keyboard
+    private func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
     func login() async {
+        guard !username.isEmpty, !password.isEmpty else {
+            loginStatus = "Please fill in all fields"
+            showAlert = true
+            return
+        }
         let response = await networkManager.login(username: username, password: password)
+
         DispatchQueue.main.async {
             if response == "Successfully logged" {
-                loginStatus = "Login successful. Loading catalog..."
+                showAlert = false
                 Task {
                     await networkManager.requestBookCatalog()
                     navigateToCatalog = true
                 }
             } else {
-                loginStatus = "Login failed. Please try again."
+                showAlert = true
+                loginStatus = "Incorrect username or password"
             }
         }
     }
-}
-
-#Preview {
-    LoginView()
 }

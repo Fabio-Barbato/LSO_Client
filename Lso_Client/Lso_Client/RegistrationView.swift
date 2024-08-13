@@ -14,6 +14,9 @@ struct RegistrationView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var registrationStatus: String = ""
+    @State private var registrationStatusTitle: String = "Registration Failed"
+    @State private var showAlert = false
+
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -76,19 +79,14 @@ struct RegistrationView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal, 20)
-
-                // Registration Status Message
-                if !registrationStatus.isEmpty {
-                    Text(registrationStatus)
-                        .padding()
-                        .foregroundColor(
-                            registrationStatus.contains("Please fill in all fields") ||
-                            registrationStatus.contains("Failed add user") ? .red : .green
-                        )
-                        .multilineTextAlignment(.center)
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: registrationStatus)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text(registrationStatusTitle),
+                        message: Text(registrationStatus),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
+
                 
                 Spacer()
             }
@@ -98,19 +96,24 @@ struct RegistrationView: View {
         .scrollDismissesKeyboard(.interactively)
     }
 
+
     func register() async {
         guard !name.isEmpty, !surname.isEmpty, !username.isEmpty, !password.isEmpty else {
             registrationStatus = "Please fill in all fields"
+            showAlert = true
             return
         }
 
         let response = await networkManager.register(name: name, surname: surname, username: username, password: password)
         DispatchQueue.main.async {
             registrationStatus = response
+            if registrationStatus == "Username already exists"{
+                showAlert = true
+            }else{
+                showAlert = true
+                registrationStatusTitle = "Registration completed!"
+                registrationStatus = "Your account has been successfully registered"
+            }
         }
     }
-}
-
-#Preview {
-    RegistrationView()
 }
