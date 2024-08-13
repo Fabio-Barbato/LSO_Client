@@ -17,103 +17,102 @@ struct LoginView: View {
 
     var body: some View {
         NavigationStack {
-                VStack {
-                    // Logo and Title
+            VStack(spacing: 30) {
+                // Logo and Title
+                VStack(spacing: 10) {
                     Image(systemName: "books.vertical.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 120, height: 120)
                         .foregroundColor(Color("Color"))
-                    
+
                     Text("BitBooks")
                         .font(.largeTitle)
-                        .foregroundColor(Color("Color"))
                         .bold()
-                    
-                    // Username Field
-                        HStack {
-                            Image(systemName: "person.fill")
-                                .foregroundColor(Color("Color"))
-                            TextField("Enter your username", text: $username)
-                        }
-                        .padding()
-                        .background(LoginField())
-                    
-                    // Password Field
-                        HStack {
-                            Image(systemName: "lock.fill")
-                                .foregroundColor(Color("Color"))
-                            SecureField("Enter your password", text: $password)
-                        }
-                        .padding()
-                        .background(LoginField())
+                        .foregroundColor(Color("Color"))
+                }
+                .padding(.top, 40)
 
-                    
-                    // Login and Register Buttons
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            Task {
-                                await login()
-                            }
-                        }) {
-                            Text("Login")
-                                .foregroundColor(.black)
-                                .font(.title2)
-                                .bold()
-                                .padding()
-                                .background(Color("Color"))
-                                .cornerRadius(10)
+                // Username and Password Fields
+                VStack(spacing: 20) {
+                    CustomTextField(
+                        placeholder: "Enter your username",
+                        text: $username,
+                        systemImageName: "person.fill"
+                    )
+
+                    CustomSecureField(
+                        placeholder: "Enter your password",
+                        text: $password,
+                        systemImageName: "lock.fill"
+                    )
+                }
+                .padding(.horizontal, 20)
+
+                // Login and Register Buttons
+                VStack(spacing: 20) {
+                    Button(action: {
+                        Task {
+                            await login()
                         }
-                        
-                        NavigationLink(destination: RegistrationView()) {
-                            Text("Register")
-                                .foregroundColor(.black)
-                                .font(.title2)
-                                .bold()
-                                .padding()
-                                .background(Color("Color"))
-                                .cornerRadius(10)
-                        }
+                    }) {
+                        Text("Login")
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("Color"))
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
                     }
                     
-                    // Login Status Message
+                    NavigationLink(destination: RegistrationView()) {
+                        Text("Register")
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.gray.opacity(0.2))
+                            .foregroundColor(Color("TextColor"))
+                            .cornerRadius(10)
+                    }
+                }
+                .padding(.horizontal, 20)
+
+                // Login Status Message
+                if !loginStatus.isEmpty {
                     Text(loginStatus)
                         .padding()
+                        .foregroundColor(loginStatus.contains("failed") ? .red : .green)
                         .multilineTextAlignment(.center)
+                        .transition(.opacity)
+                        .animation(.easeInOut, value: loginStatus)
                 }
-                .onAppear {
-                    #if DEBUG
-                    UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-                    #endif
-                }
-            .navigationDestination(isPresented: $navigateToCatalog) {
-                CatalogView()
+                
+                Spacer()
             }
+            .onAppear {
+                #if DEBUG
+                UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+                #endif
+            }
+            .navigationDestination(isPresented: $navigateToCatalog) {
+                LibraryView(username: username)
+            }
+            .background(Color(.systemGroupedBackground).ignoresSafeArea())
         }
     }
 
-/*    func login() async {
-        guard !username.isEmpty, !password.isEmpty else {
-            loginStatus = "Please fill in all fields."
-            return
-        }
-
+    func login() async {
         let response = await networkManager.login(username: username, password: password)
         DispatchQueue.main.async {
-            loginStatus = response
             if response == "Successfully logged" {
-                navigateToCatalog = true
+                loginStatus = "Login successful. Loading catalog..."
+                Task {
+                    await networkManager.requestBookCatalog()
+                    navigateToCatalog = true
+                }
+            } else {
+                loginStatus = "Login failed. Please try again."
             }
-        }
-    }*/
-     func login() async {
-        let response = await networkManager.login(username: username, password: password)
-        if response == "Successfully logged" {
-            loginStatus = "Login successful. Loading catalog..."
-            await networkManager.requestBookCatalog()
-            navigateToCatalog = true
-        } else {
-            loginStatus = "Login failed. Please try again."
         }
     }
 }

@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		25615C742C69368300C4C113 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C732C69368300C4C113 /* RegistrationView.swift */; };
-		25615C782C6A21F700C4C113 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C772C6A21F700C4C113 /* CatalogView.swift */; };
-		25615C7A2C6A3B7A00C4C113 /* LoginField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C792C6A3B7A00C4C113 /* LoginField.swift */; };
 		25615C7E2C6A6BAF00C4C113 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C7D2C6A6BAF00C4C113 /* Book.swift */; };
+		25615C822C6B450400C4C113 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C812C6B450400C4C113 /* LibraryView.swift */; };
+		25615C842C6B573200C4C113 /* LoginFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25615C832C6B573200C4C113 /* LoginFieldsView.swift */; };
 		25E687C52C68C28900D91658 /* Lso_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687C42C68C28900D91658 /* Lso_ClientApp.swift */; };
 		25E687C72C68C28900D91658 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687C62C68C28900D91658 /* LoginView.swift */; };
 		25E687C92C68C29400D91658 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25E687C82C68C29400D91658 /* Assets.xcassets */; };
@@ -20,9 +20,9 @@
 
 /* Begin PBXFileReference section */
 		25615C732C69368300C4C113 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
-		25615C772C6A21F700C4C113 /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
-		25615C792C6A3B7A00C4C113 /* LoginField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginField.swift; sourceTree = "<group>"; };
 		25615C7D2C6A6BAF00C4C113 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		25615C812C6B450400C4C113 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		25615C832C6B573200C4C113 /* LoginFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFieldsView.swift; sourceTree = "<group>"; };
 		25E687C12C68C28900D91658 /* Lso_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lso_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E687C42C68C28900D91658 /* Lso_ClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lso_ClientApp.swift; sourceTree = "<group>"; };
 		25E687C62C68C28900D91658 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -62,16 +62,16 @@
 		25E687C32C68C28900D91658 /* Lso_Client */ = {
 			isa = PBXGroup;
 			children = (
+				25615C832C6B573200C4C113 /* LoginFieldsView.swift */,
 				25615C7D2C6A6BAF00C4C113 /* Book.swift */,
 				25E687C42C68C28900D91658 /* Lso_ClientApp.swift */,
 				25E687C62C68C28900D91658 /* LoginView.swift */,
-				25615C772C6A21F700C4C113 /* CatalogView.swift */,
+				25615C812C6B450400C4C113 /* LibraryView.swift */,
 				25E687C82C68C29400D91658 /* Assets.xcassets */,
 				25E687CA2C68C29400D91658 /* Lso_Client.entitlements */,
 				25E687CB2C68C29400D91658 /* Preview Content */,
 				25E687D32C68C2AD00D91658 /* Connection.swift */,
 				25615C732C69368300C4C113 /* RegistrationView.swift */,
-				25615C792C6A3B7A00C4C113 /* LoginField.swift */,
 			);
 			path = Lso_Client;
 			sourceTree = "<group>";
@@ -155,12 +155,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				25E687C72C68C28900D91658 /* LoginView.swift in Sources */,
+				25615C842C6B573200C4C113 /* LoginFieldsView.swift in Sources */,
 				25615C742C69368300C4C113 /* RegistrationView.swift in Sources */,
 				25615C7E2C6A6BAF00C4C113 /* Book.swift in Sources */,
-				25615C7A2C6A3B7A00C4C113 /* LoginField.swift in Sources */,
+				25615C822C6B450400C4C113 /* LibraryView.swift in Sources */,
 				25E687D42C68C2AD00D91658 /* Connection.swift in Sources */,
 				25E687C52C68C28900D91658 /* Lso_ClientApp.swift in Sources */,
-				25615C782C6A21F700C4C113 /* CatalogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

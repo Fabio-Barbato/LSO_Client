@@ -14,97 +14,102 @@ struct RegistrationView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var registrationStatus: String = ""
-    
+
     var body: some View {
-        ScrollView(showsIndicators:false){
-        VStack(spacing: 20) {
-            // Logo or app icon
-            Image(systemName: "books.vertical.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, height: 100)
-                .foregroundColor(Color("Color"))
-                .padding(.top, 50)
-            
-            Text("Register")
-                .font(.largeTitle)
-                .foregroundColor(Color("Color"))
-                .bold()
-                .padding(.bottom, 20)
-            
-            // Name Field
-            HStack {
-                TextField("Enter your name", text: $name)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color("Color"), lineWidth: 2))
-            }
-            .padding(.horizontal)
-            
-            // Surname Field
-            HStack {
-                TextField("Enter your surname", text: $surname)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color("Color"), lineWidth: 2))
-            }
-            .padding(.horizontal)
-            
-            // Username Field
-            HStack {
-                TextField("Enter your username", text: $username)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color("Color"), lineWidth: 2))
-            }
-            .padding(.horizontal)
-            
-            // Password Field
-            HStack {
-                SecureField("Enter your password", text: $password)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color("Color"), lineWidth: 2))
-            }
-            .padding(.horizontal)
-            
-            
-            // Register Button
-            HStack {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 30) {
+                // Logo and Title
+                VStack(spacing: 10) {
+                    Image(systemName: "books.vertical.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 120, height: 120)
+                        .foregroundColor(Color("Color"))
+
+                    Text("Register")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(Color("Color"))
+                }
+                .padding(.top, 40)
+
+                // Name and Surname Fields
+                VStack(spacing: 20) {
+                    CustomTextField(
+                        placeholder: "Enter your name",
+                        text: $name,
+                        systemImageName: "person.fill"
+                    )
+
+                    CustomTextField(
+                        placeholder: "Enter your surname",
+                        text: $surname,
+                        systemImageName: "person.fill"
+                    )
+
+                    CustomTextField(
+                        placeholder: "Enter your username",
+                        text: $username,
+                        systemImageName: "person.crop.circle.fill"
+                    )
+
+                    CustomSecureField(
+                        placeholder: "Enter your password",
+                        text: $password,
+                        systemImageName: "lock.fill"
+                    )
+                }
+                .padding(.horizontal, 20)
+
+                // Register Button
                 Button(action: {
-                    Task{
+                    Task {
                         await register()
                     }
                 }) {
                     Text("Register")
-                        .foregroundColor(.black)
-                        .font(.title2)
                         .bold()
+                        .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color("Color"))
+                        .foregroundColor(.black)
                         .cornerRadius(10)
                 }
+                .padding(.horizontal, 20)
+
+                // Registration Status Message
+                if !registrationStatus.isEmpty {
+                    Text(registrationStatus)
+                        .padding()
+                        .foregroundColor(
+                            registrationStatus.contains("Please fill in all fields") ||
+                            registrationStatus.contains("Failed add user") ? .red : .green
+                        )
+                        .multilineTextAlignment(.center)
+                        .transition(.opacity)
+                        .animation(.easeInOut, value: registrationStatus)
+                }
+                
+                Spacer()
             }
-            .padding(.top, 20)
-            
-            // Registration Status Message
-            Text(registrationStatus)
-                .padding()
-                .multilineTextAlignment(.center)
-            
-            Spacer()
+            .padding(.vertical)
+            .background(Color(.systemGroupedBackground).ignoresSafeArea())
         }
-            .padding()}.scrollDismissesKeyboard(.interactively)
+        .scrollDismissesKeyboard(.interactively)
     }
-    
+
     func register() async {
         guard !name.isEmpty, !surname.isEmpty, !username.isEmpty, !password.isEmpty else {
             registrationStatus = "Please fill in all fields"
             return
         }
-        
+
         let response = await networkManager.register(name: name, surname: surname, username: username, password: password)
-        
-        registrationStatus = response
+        DispatchQueue.main.async {
+            registrationStatus = response
         }
     }
-
+}
 
 #Preview {
     RegistrationView()
