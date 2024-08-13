@@ -51,7 +51,7 @@ struct LibraryView: View {
     // Filter books based on search text and selected filter
     var filteredBooks: [Book] {
         networkManager.bookCatalog.filter { book in
-            (searchText.isEmpty || book.title.localizedCaseInsensitiveContains(searchText) || book.genre.localizedCaseInsensitiveContains(searchText)) &&
+            (searchText.isEmpty || book.title.localizedCaseInsensitiveContains(searchText)) &&
             (selectedFilter == .all || (selectedFilter == .available && book.copies > 0))
         }
     }
@@ -137,5 +137,3 @@ enum BookFilter: String, CaseIterable {
     case all = "All"
     case available = "Available"
 }
-
-

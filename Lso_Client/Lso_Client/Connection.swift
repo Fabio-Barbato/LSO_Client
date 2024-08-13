@@ -36,7 +36,7 @@ class NetworkManager: ObservableObject {
 
     func receive() async -> String {
         return await withCheckedContinuation { continuation in
-            connection?.receive(minimumIncompleteLength: 1, maximumLength: 1024) { data, _, isComplete, error in
+            connection?.receive(minimumIncompleteLength: 1, maximumLength: 4096) { data, _, isComplete, error in
                 if let error = error {
                     print("Error receiving data: \(error.localizedDescription)")
                     continuation.resume(returning: "")
