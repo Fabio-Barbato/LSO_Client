@@ -92,7 +92,7 @@ struct LoginView: View {
                 #endif
             }
             .navigationDestination(isPresented: $navigateToCatalog) {
-                LibraryView(username: username)
+                TabScreen(username: username)
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .contentShape(Rectangle()) // Needed for the gesture to be recognized in empty spaces

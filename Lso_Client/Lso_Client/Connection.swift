@@ -11,6 +11,7 @@ import Network
 class NetworkManager: ObservableObject {
     static let shared = NetworkManager()
     @Published var bookCatalog: [Book] = []
+    var bookParsed = Book(title: "", ISBN: "", author: "", genre: "", copies: 0, given_copies: 0, cover: "")
     private let host = NWEndpoint.Host("192.168.1.116")
     private let port = NWEndpoint.Port(rawValue: 8080)!
     private var connection: NWConnection?
@@ -87,6 +88,31 @@ class NetworkManager: ObservableObject {
         parseReceivedData(responseString)
         return responseString
     }
+    
+    func requestBook(isbn: String) async -> Book? {
+        let message = "GET_BOOK \(isbn)"
+        if let messageData = message.data(using: .utf8) {
+            send(data: messageData)
+        }
+        
+        let responseString = await receive()
+        return parseReceivedBook(responseString)
+    }
+
+    private func parseReceivedBook(_ responseString: String) -> Book? {
+        print("Received JSON string: \(responseString)")
+        if let data = responseString.data(using: .utf8) {
+            do {
+                let book = try JSONDecoder().decode(Book.self, from: data)
+                DispatchQueue.main.async {
+                    self.bookParsed = book
+                }
+            } catch {
+                print("Error decoding JSON: \(error.localizedDescription)")
+            }
+        }
+        return nil
+    }
 
     private func parseReceivedData(_ responseString: String) {
         print("Received JSON string: \(responseString)")
@@ -108,4 +134,5 @@ class NetworkManager: ObservableObject {
  LOGIN username password
  LOAN username isbn1 isbn2 isbn3...
  GET_BOOKS
+ GET_BOOK isbn
  */

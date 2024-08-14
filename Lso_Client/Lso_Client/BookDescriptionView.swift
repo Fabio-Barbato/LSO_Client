@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookDescriptionView: View {
     @EnvironmentObject var networkManager: NetworkManager
+    @EnvironmentObject var cartManager: CartManager
     @State private var showAlert = false
     var availableCopies: Int
     @State private var isOutOfStock = false
@@ -64,11 +65,15 @@ struct BookDescriptionView: View {
                 
                 // Add to cart button
                 Button(action: {
-                    if availableCopies > 0 {
-                        //navigateToCheckout = true
-                    } else {
-                        isOutOfStock = true
-                        showAlert = true
+                    Task {
+                        await networkManager.requestBook(isbn: isbn)
+                        
+                        if networkManager.bookParsed.copies > 0 {
+                            cartManager.addBook(networkManager.bookParsed)
+                        } else {
+                            isOutOfStock = true
+                            showAlert = true
+                        }
                     }
                 }) {
                     HStack {
