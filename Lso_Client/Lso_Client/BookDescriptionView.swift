@@ -70,10 +70,11 @@ struct BookDescriptionView: View {
                         
                         if networkManager.bookParsed.copies > 0 {
                             cartManager.addBook(networkManager.bookParsed)
+                            isOutOfStock = false
                         } else {
                             isOutOfStock = true
-                            showAlert = true
                         }
+                        showAlert = true
                     }
                 }) {
                     HStack {
@@ -89,8 +90,8 @@ struct BookDescriptionView: View {
                 }
                 .alert(isPresented: $showAlert) {
                     Alert(
-                        title: Text("Out of Stock"),
-                        message: Text("There are no copies left for this book"),
+                        title: Text(isOutOfStock ? "Out of Stock" : "Success"),
+                        message: Text(isOutOfStock ? "There are no copies left for this book" : "Added to your cart successfully"),
                         dismissButton: .default(Text("OK"))
                     )
                 }

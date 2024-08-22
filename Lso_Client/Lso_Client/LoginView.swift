@@ -120,10 +120,10 @@ struct LoginView: View {
         DispatchQueue.main.async {
             if response == "Successfully logged" {
                 showAlert = false
-                Task {
-                    await networkManager.requestBookCatalog()
+                //Task {
+                   // await networkManager.requestBookCatalog()
                     navigateToCatalog = true
-                }
+               // }
             } else {
                 showAlert = true
                 loginStatus = "Incorrect username or password"
