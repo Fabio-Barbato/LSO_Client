@@ -11,7 +11,6 @@ struct LibraryView: View {
     @EnvironmentObject var networkManager: NetworkManager
     @State private var searchText: String = ""
     @State private var selectedFilter: BookFilter = .all
-    var username: String
 
     var body: some View {
         NavigationStack {

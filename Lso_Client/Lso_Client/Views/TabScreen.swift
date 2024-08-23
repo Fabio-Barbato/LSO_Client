@@ -12,13 +12,13 @@ struct TabScreen: View {
 
     var body: some View {
         TabView{
-            LibraryView(username: username)
+            LibraryView()
                 .tabItem {
                     Label("Library",systemImage: "books.vertical.fill")
                         .foregroundStyle(Color("Color"))
                 }
             
-            CartView()
+            CartView(username: username)
                 .tabItem {
                     Label("Checkout",systemImage: "cart.fill")
                         .foregroundStyle(Color("Color"))

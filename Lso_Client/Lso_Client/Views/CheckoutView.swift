@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// Classe per gestire il carrello, conforme a ObservableObject
 class CartManager: ObservableObject {
     @Published var cart: [Book] = []
     
@@ -24,8 +23,11 @@ class CartManager: ObservableObject {
 
 struct CartView: View {
     @EnvironmentObject var cartManager: CartManager
+    @EnvironmentObject var networkManager: NetworkManager
     @State private var showAlert = false
     @State private var alertMessage = ""
+    var username: String
+
 
     var body: some View {
         NavigationStack {
@@ -90,9 +92,10 @@ struct CartView: View {
                     }
                 }
 
-                // Bottone di Checkout
                 Button(action: {
-                    checkout()
+                    Task{
+                        await checkout()
+                    }
                 }) {
                     Text("Proceed to Checkout")
                         .bold()
@@ -119,11 +122,18 @@ struct CartView: View {
         }
     }
 
-    func checkout() {
+    func checkout() async {
         guard !cartManager.cart.isEmpty else { return }
-        // Logica di checkout
-        alertMessage = "Your books have been successfully borrowed."
-        cartManager.cart.removeAll() // Svuota il carrello dopo il prestito
+        var booksFetched = ""
+        
+        for book in cartManager.cart{
+            booksFetched = booksFetched + " " + book.ISBN
+        }
+        let response = await networkManager.loan(username: username, books: booksFetched)
+        alertMessage = response
+        if alertMessage == "Loan confirmed"{
+            cartManager.cart.removeAll()
+        }
         showAlert = true
     }
 }

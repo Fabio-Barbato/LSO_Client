@@ -131,6 +131,17 @@ class NetworkManager: ObservableObject {
             }
         }
     }
+    
+    func loan(username: String, books: String) async -> String {
+        let message = "LOAN \(username) \(books)"
+        if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
+            send(data: messageData)
+        }
+        
+        let response = await receive()
+        return response
+    }
 }
 
 /*COMMAND LIST

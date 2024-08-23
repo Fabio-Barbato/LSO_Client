@@ -55,6 +55,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		259BE5462C789FD300D007C7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				259BE5482C78A01400D007C7 /* Library */,
+				259BE5472C789FE800D007C7 /* Login */,
+				25615C892C6B966700C4C113 /* BookDescriptionView.swift */,
+				25615C8D2C6C11F400C4C113 /* CheckoutView.swift */,
+				25615C732C69368300C4C113 /* RegistrationView.swift */,
+				25615C912C6C14F700C4C113 /* TabScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		259BE5472C789FE800D007C7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				25E687C62C68C28900D91658 /* LoginView.swift */,
+				25615C832C6B573200C4C113 /* LoginFieldsView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		259BE5482C78A01400D007C7 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				25615C812C6B450400C4C113 /* LibraryView.swift */,
+				25615C852C6B932100C4C113 /* BookRow.swift */,
+				25615C872C6B938100C4C113 /* SearchBar.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		259BE5492C78A04F00D007C7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				25615C8B2C6B96F700C4C113 /* BookGoogleAPI.swift */,
+				25615C7D2C6A6BAF00C4C113 /* Book.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		259BE54A2C78A08400D007C7 /* ModelView */ = {
+			isa = PBXGroup;
+			children = (
+				25E687D32C68C2AD00D91658 /* Connection.swift */,
+			);
+			path = ModelView;
+			sourceTree = "<group>";
+		};
 		25E687B82C68C28900D91658 = {
 			isa = PBXGroup;
 			children = (
@@ -74,22 +123,13 @@
 		25E687C32C68C28900D91658 /* Lso_Client */ = {
 			isa = PBXGroup;
 			children = (
-				25615C912C6C14F700C4C113 /* TabScreen.swift */,
-				25615C8D2C6C11F400C4C113 /* CheckoutView.swift */,
-				25615C852C6B932100C4C113 /* BookRow.swift */,
-				25615C832C6B573200C4C113 /* LoginFieldsView.swift */,
-				25615C7D2C6A6BAF00C4C113 /* Book.swift */,
+				259BE54A2C78A08400D007C7 /* ModelView */,
+				259BE5492C78A04F00D007C7 /* Model */,
+				259BE5462C789FD300D007C7 /* Views */,
 				25E687C42C68C28900D91658 /* Lso_ClientApp.swift */,
-				25E687C62C68C28900D91658 /* LoginView.swift */,
-				25615C812C6B450400C4C113 /* LibraryView.swift */,
 				25E687C82C68C29400D91658 /* Assets.xcassets */,
 				25E687CA2C68C29400D91658 /* Lso_Client.entitlements */,
 				25E687CB2C68C29400D91658 /* Preview Content */,
-				25E687D32C68C2AD00D91658 /* Connection.swift */,
-				25615C732C69368300C4C113 /* RegistrationView.swift */,
-				25615C872C6B938100C4C113 /* SearchBar.swift */,
-				25615C892C6B966700C4C113 /* BookDescriptionView.swift */,
-				25615C8B2C6B96F700C4C113 /* BookGoogleAPI.swift */,
 			);
 			path = Lso_Client;
 			sourceTree = "<group>";
