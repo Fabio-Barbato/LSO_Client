@@ -70,7 +70,7 @@ struct CartView: View {
                                     }
                                 }
                                 .padding()
-                                .background(Color("SecColor").opacity(0.1))
+                                .background(Color.gray.opacity(0.2))
                                 .cornerRadius(10)
                             }
                         }
@@ -96,7 +96,7 @@ struct CartView: View {
                 .disabled(cartManager.cart.isEmpty)
                 .alert(isPresented: $showAlert) {
                     Alert(
-                        title: Text("Checkout"),
+                        title: Text(alertMessage == "Loan confirmed" ? "Success":"Error"),
                         message: Text(alertMessage),
                         dismissButton: .default(Text("OK"))
                     )

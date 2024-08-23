@@ -11,6 +11,7 @@ import Network
 class NetworkManager: ObservableObject {
     static let shared = NetworkManager()
     @Published var bookCatalog: [Book] = []
+    @Published var notifications: [Notification] = []
     var bookParsed = Book(title: "", ISBN: "", author: "", genre: "", copies: 0, given_copies: 0, cover: "")
     private let host = NWEndpoint.Host("192.168.1.116")
     private let port = NWEndpoint.Port(rawValue: 8080)!
@@ -142,6 +143,32 @@ class NetworkManager: ObservableObject {
         let response = await receive()
         return response
     }
+    
+    
+    func checkNotifications(for username: String) async {
+        let message = "CHECK_NOTIFICATIONS \(username)"
+        if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
+            send(data: messageData)
+        }
+
+        let responseString = await receive()
+        parseNotifications(responseString)
+    }
+
+    private func parseNotifications(_ responseString: String) {
+        print("Received Notifications JSON: \(responseString)")
+        if let data = responseString.data(using: .utf8) {
+            do {
+                let notifications = try JSONDecoder().decode([Notification].self, from: data)
+                DispatchQueue.main.async {
+                    self.notifications = notifications
+                }
+            } catch {
+                print("Error decoding Notifications JSON: \(error)")
+            }
+        }
+    }
 }
 
 /*COMMAND LIST
@@ -150,4 +177,5 @@ class NetworkManager: ObservableObject {
  LOAN username isbn1 isbn2 isbn3...
  GET_BOOKS
  GET_BOOK isbn
+ CHECK_NOTIFICATIONS username
  */

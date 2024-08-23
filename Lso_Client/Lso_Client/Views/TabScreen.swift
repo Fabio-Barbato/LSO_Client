@@ -15,15 +15,17 @@ struct TabScreen: View {
             LibraryView()
                 .tabItem {
                     Label("Library",systemImage: "books.vertical.fill")
-                        .foregroundStyle(Color("Color"))
                 }
             
             CartView(username: username)
                 .tabItem {
                     Label("Checkout",systemImage: "cart.fill")
-                        .foregroundStyle(Color("Color"))
-
                 }
-        }
+            
+            NotificationsView(username: username)
+                .tabItem {
+                    Label("Notifications",systemImage: "bell.fill")
+                }
+        }.accentColor(Color("Color"))
     }
 }
