@@ -61,6 +61,7 @@ class NetworkManager: ObservableObject {
     func login(username: String, password: String) async -> String {
         let message = "LOGIN \(username) \(password)"
         if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
             send(data: messageData)
         }
         
@@ -71,6 +72,7 @@ class NetworkManager: ObservableObject {
     func register(name: String, surname: String, username: String, password: String) async -> String {
         let message = "ADD_USER \(name) \(surname) \(username) \(password)"
         if let messageData = message.data(using: .utf8) {
+            print("Sendig \(message)")
             send(data: messageData)
         }
         
@@ -81,6 +83,7 @@ class NetworkManager: ObservableObject {
     func requestBookCatalog() async -> String {
         let message = "GET_BOOKS"
         if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
             send(data: messageData)
         }
         
@@ -92,6 +95,7 @@ class NetworkManager: ObservableObject {
     func requestBook(isbn: String) async -> Book? {
         let message = "GET_BOOK \(isbn)"
         if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
             send(data: messageData)
         }
         
@@ -108,7 +112,7 @@ class NetworkManager: ObservableObject {
                     self.bookParsed = book
                 }
             } catch {
-                print("Error decoding JSON: \(error.localizedDescription)")
+                print("Error decoding JSON: \(error)")
             }
         }
         return nil
@@ -123,7 +127,7 @@ class NetworkManager: ObservableObject {
                     self.bookCatalog = books
                 }
             } catch {
-                print("Error decoding JSON: \(error.localizedDescription)")
+                print("Error decoding JSON: \(error)")
             }
         }
     }
