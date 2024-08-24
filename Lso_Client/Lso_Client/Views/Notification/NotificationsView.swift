@@ -37,7 +37,6 @@ struct NotificationsView: View {
                 
                 Spacer()
             }
-            .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .onAppear {
                 Task {
                     if(!notificationsFetched){

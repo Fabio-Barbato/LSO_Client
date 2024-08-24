@@ -39,8 +39,6 @@ struct LoansView: View {
 
                 Spacer()
             }
-            .background(Color(.systemGroupedBackground).ignoresSafeArea())
-            .navigationTitle("Profile")
             .onAppear {
                 Task {
                     await fetchUserLoans()
