@@ -12,7 +12,7 @@ struct NotificationRow: View {
     var body: some View {
         HStack {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundColor(notification.notified ? .gray : .yellow)
+                .foregroundColor(Color("Color"))
                 .font(.title)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -23,7 +23,6 @@ struct NotificationRow: View {
             Spacer()
         }
         .padding()
-        .background(Color.gray.opacity(0.2))
         .cornerRadius(10)
     }
 }
