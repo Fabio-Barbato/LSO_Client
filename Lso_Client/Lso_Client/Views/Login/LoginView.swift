@@ -97,10 +97,12 @@ struct LoginView: View {
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .contentShape(Rectangle()) // Needed for the gesture to be recognized in empty spaces
             .gesture(
-                TapGesture()
-                    .onEnded { _ in
-                        dismissKeyboard()
-                    }
+                DragGesture().onChanged { _ in
+                    dismissKeyboard()
+                }
+                .simultaneously(with: TapGesture().onEnded {
+                    dismissKeyboard()
+                })
             )
         }
     }

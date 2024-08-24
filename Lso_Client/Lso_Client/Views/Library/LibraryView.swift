@@ -33,10 +33,13 @@ struct LibraryView: View {
                 .padding()
 
                 // Book list
-                List(filteredBooks) { book in
-                    BookRow(book: book)
-                }
-                .listStyle(InsetGroupedListStyle())
+                    List(filteredBooks) { book in
+                        BookRow(book: book)
+                    }
+                    .listStyle(InsetGroupedListStyle())
+                    .gesture(DragGesture().onChanged { _ in
+                        hideKeyboard()
+                    })
             }
             .onAppear {
                 Task {
@@ -44,6 +47,11 @@ struct LibraryView: View {
                 }
             }
         }
+    }
+    
+    // Function to hide keyboard
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
     // Filter books based on search text and selected filter
