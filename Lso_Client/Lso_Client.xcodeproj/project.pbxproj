@@ -20,12 +20,16 @@
 		259BE54C2C78DEF900D007C7 /* CartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE54B2C78DEF900D007C7 /* CartManager.swift */; };
 		259BE5502C78EC2D00D007C7 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE54F2C78EC2D00D007C7 /* NotificationsView.swift */; };
 		259BE5522C78F04200D007C7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE5512C78F04200D007C7 /* Notifications.swift */; };
-		259BE5542C79432400D007C7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE5532C79432400D007C7 /* ProfileView.swift */; };
+		259BE5542C79432400D007C7 /* LoansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE5532C79432400D007C7 /* LoansView.swift */; };
+		259BE5562C79D21700D007C7 /* Loan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE5552C79D21700D007C7 /* Loan.swift */; };
+		259BE5592C79D2C000D007C7 /* LoanRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE5582C79D2C000D007C7 /* LoanRow.swift */; };
+		259BE55B2C79D35700D007C7 /* NotificationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE55A2C79D35700D007C7 /* NotificationRow.swift */; };
+		259BE55E2C79D4C200D007C7 /* CartRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259BE55D2C79D4C200D007C7 /* CartRow.swift */; };
 		25E687C52C68C28900D91658 /* Lso_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687C42C68C28900D91658 /* Lso_ClientApp.swift */; };
 		25E687C72C68C28900D91658 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687C62C68C28900D91658 /* LoginView.swift */; };
 		25E687C92C68C29400D91658 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25E687C82C68C29400D91658 /* Assets.xcassets */; };
 		25E687CD2C68C29400D91658 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25E687CC2C68C29400D91658 /* Preview Assets.xcassets */; };
-		25E687D42C68C2AD00D91658 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687D32C68C2AD00D91658 /* Connection.swift */; };
+		25E687D42C68C2AD00D91658 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E687D32C68C2AD00D91658 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,14 +46,18 @@
 		259BE54B2C78DEF900D007C7 /* CartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartManager.swift; sourceTree = "<group>"; };
 		259BE54F2C78EC2D00D007C7 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		259BE5512C78F04200D007C7 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		259BE5532C79432400D007C7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		259BE5532C79432400D007C7 /* LoansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoansView.swift; sourceTree = "<group>"; };
+		259BE5552C79D21700D007C7 /* Loan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan.swift; sourceTree = "<group>"; };
+		259BE5582C79D2C000D007C7 /* LoanRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoanRow.swift; sourceTree = "<group>"; };
+		259BE55A2C79D35700D007C7 /* NotificationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRow.swift; sourceTree = "<group>"; };
+		259BE55D2C79D4C200D007C7 /* CartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRow.swift; sourceTree = "<group>"; };
 		25E687C12C68C28900D91658 /* Lso_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lso_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E687C42C68C28900D91658 /* Lso_ClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lso_ClientApp.swift; sourceTree = "<group>"; };
 		25E687C62C68C28900D91658 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		25E687C82C68C29400D91658 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		25E687CA2C68C29400D91658 /* Lso_Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lso_Client.entitlements; sourceTree = "<group>"; };
 		25E687CC2C68C29400D91658 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		25E687D32C68C2AD00D91658 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		25E687D32C68C2AD00D91658 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,13 +75,13 @@
 			isa = PBXGroup;
 			children = (
 				25615C892C6B966700C4C113 /* BookDescriptionView.swift */,
-				25615C8D2C6C11F400C4C113 /* CartView.swift */,
+				259BE55F2C79D62800D007C7 /* Cart */,
 				259BE5482C78A01400D007C7 /* Library */,
+				259BE5572C79D26F00D007C7 /* Loans */,
 				259BE5472C789FE800D007C7 /* Login */,
-				259BE54F2C78EC2D00D007C7 /* NotificationsView.swift */,
+				259BE55C2C79D3CB00D007C7 /* Notification */,
 				25615C732C69368300C4C113 /* RegistrationView.swift */,
 				25615C912C6C14F700C4C113 /* TabScreen.swift */,
-				259BE5532C79432400D007C7 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -104,6 +112,7 @@
 				25615C7D2C6A6BAF00C4C113 /* Book.swift */,
 				259BE54B2C78DEF900D007C7 /* CartManager.swift */,
 				259BE5512C78F04200D007C7 /* Notifications.swift */,
+				259BE5552C79D21700D007C7 /* Loan.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -111,9 +120,36 @@
 		259BE54A2C78A08400D007C7 /* ModelView */ = {
 			isa = PBXGroup;
 			children = (
-				25E687D32C68C2AD00D91658 /* Connection.swift */,
+				25E687D32C68C2AD00D91658 /* NetworkManager.swift */,
 			);
 			path = ModelView;
+			sourceTree = "<group>";
+		};
+		259BE5572C79D26F00D007C7 /* Loans */ = {
+			isa = PBXGroup;
+			children = (
+				259BE5532C79432400D007C7 /* LoansView.swift */,
+				259BE5582C79D2C000D007C7 /* LoanRow.swift */,
+			);
+			path = Loans;
+			sourceTree = "<group>";
+		};
+		259BE55C2C79D3CB00D007C7 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				259BE54F2C78EC2D00D007C7 /* NotificationsView.swift */,
+				259BE55A2C79D35700D007C7 /* NotificationRow.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		259BE55F2C79D62800D007C7 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				25615C8D2C6C11F400C4C113 /* CartView.swift */,
+				259BE55D2C79D4C200D007C7 /* CartRow.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		25E687B82C68C28900D91658 = {
@@ -225,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25E687C72C68C28900D91658 /* LoginView.swift in Sources */,
+				259BE5592C79D2C000D007C7 /* LoanRow.swift in Sources */,
 				25615C842C6B573200C4C113 /* LoginFieldsView.swift in Sources */,
 				25615C8E2C6C11F400C4C113 /* CartView.swift in Sources */,
 				25615C742C69368300C4C113 /* RegistrationView.swift in Sources */,
@@ -233,13 +270,16 @@
 				25615C7E2C6A6BAF00C4C113 /* Book.swift in Sources */,
 				25615C882C6B938100C4C113 /* SearchBar.swift in Sources */,
 				259BE5522C78F04200D007C7 /* Notifications.swift in Sources */,
-				259BE5542C79432400D007C7 /* ProfileView.swift in Sources */,
+				259BE5542C79432400D007C7 /* LoansView.swift in Sources */,
 				25615C922C6C14F700C4C113 /* TabScreen.swift in Sources */,
 				259BE54C2C78DEF900D007C7 /* CartManager.swift in Sources */,
+				259BE55E2C79D4C200D007C7 /* CartRow.swift in Sources */,
 				25615C822C6B450400C4C113 /* LibraryView.swift in Sources */,
+				259BE5562C79D21700D007C7 /* Loan.swift in Sources */,
+				259BE55B2C79D35700D007C7 /* NotificationRow.swift in Sources */,
 				259BE5502C78EC2D00D007C7 /* NotificationsView.swift in Sources */,
 				25615C8C2C6B96F700C4C113 /* BookGoogleAPI.swift in Sources */,
-				25E687D42C68C2AD00D91658 /* Connection.swift in Sources */,
+				25E687D42C68C2AD00D91658 /* NetworkManager.swift in Sources */,
 				25E687C52C68C28900D91658 /* Lso_ClientApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

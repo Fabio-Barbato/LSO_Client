@@ -32,50 +32,9 @@ struct CartView: View {
                         .foregroundColor(.gray)
                         .padding(.top, 50)
                 } else {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 20) {
-                            ForEach(cartManager.cart) { book in
-                                HStack {
-                                    AsyncImage(url: URL(string: book.cover)) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 70, height: 100)
-                                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                                    } placeholder: {
-                                        Rectangle()
-                                            .fill(.gray)
-                                            .frame(width: 70, height: 100)
-                                            .overlay(
-                                                Text("No Cover")
-                                                    .font(.caption)
-                                                    .foregroundColor(.white)
-                                            )
-                                    }
-                                    
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(book.title)
-                                            .font(.headline)
-                                            .foregroundColor(Color("TextColor"))
-                                        Text("by \(book.author)")
-                                            .font(.subheadline)
-                                            .foregroundColor(.gray)
-                                    }
-                                    Spacer()
-                                    Button(action: {
-                                        cartManager.removeBook(book)
-                                    }) {
-                                        Image(systemName: "trash.fill")
-                                            .foregroundColor(.red)
-                                    }
-                                }
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(10)
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
+                    List(cartManager.cart) { book in
+                        CartRow(book: book)
+                    }.listStyle(InsetGroupedListStyle())
                 }
 
                 Button(action: {

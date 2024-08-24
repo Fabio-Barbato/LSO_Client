@@ -29,28 +29,10 @@ struct NotificationsView: View {
                         .foregroundColor(.gray)
                         .padding(.top, 50)
                 } else {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 20) {
-                            ForEach(notifications) { notification in
-                                HStack {
-                                    Image(systemName: "exclamationmark.triangle.fill")
-                                        .foregroundColor(notification.notified ? .gray : .yellow)
-                                        .font(.title)
-
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(notification.message)
-                                            .font(.headline)
-                                            .foregroundColor(Color("TextColor"))
-                                    }
-                                    Spacer()
-                                }
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(10)
-                            }
-                        }
-                        .padding(.horizontal)
+                    List(notifications) { notification in
+                        NotificationRow(notification: notification)
                     }
+                    .listStyle(InsetGroupedListStyle())
                 }
                 
                 Spacer()

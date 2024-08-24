@@ -26,7 +26,7 @@ struct TabScreen: View {
                 .tabItem {
                     Label("Notifications",systemImage: "bell.fill")
                 }
-            ProfileView(username: username)
+            LoansView(username: username)
                 .tabItem {
                     Label("Profile",systemImage: "person.fill")
                 }
