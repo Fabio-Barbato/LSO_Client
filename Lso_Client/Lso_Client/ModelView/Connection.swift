@@ -169,6 +169,54 @@ class NetworkManager: ObservableObject {
             }
         }
     }
+
+    func requestUserProfile(username: String) async -> User? {
+        let message = "GET_USER \(username)"
+        if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
+            send(data: messageData)
+        }
+
+        let responseString = await receive()
+        return parseReceivedUser(responseString)
+    }
+
+    private func parseReceivedUser(_ responseString: String) -> User? {
+        print("Received User JSON string: \(responseString)")
+        if let data = responseString.data(using: .utf8) {
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                return user
+            } catch {
+                print("Error decoding User JSON: \(error)")
+            }
+        }
+        return nil
+    }
+
+    func requestUserLoans(username: String) async -> [Loan]? {
+        let message = "GET_LOANS \(username)"
+        if let messageData = message.data(using: .utf8) {
+            print("Sending \(message)")
+            send(data: messageData)
+        }
+
+        let responseString = await receive()
+        return parseReceivedLoans(responseString)
+    }
+
+    private func parseReceivedLoans(_ responseString: String) -> [Loan]? {
+        print("Received Loans JSON string: \(responseString)")
+        if let data = responseString.data(using: .utf8) {
+            do {
+                let loans = try JSONDecoder().decode([Loan].self, from: data)
+                return loans
+            } catch {
+                print("Error decoding Loans JSON: \(error)")
+            }
+        }
+        return nil
+    }
 }
 
 /*COMMAND LIST
@@ -178,4 +226,6 @@ class NetworkManager: ObservableObject {
  GET_BOOKS
  GET_BOOK isbn
  CHECK_NOTIFICATIONS username
+ GET_USER username
+ GET_LOANS username
  */

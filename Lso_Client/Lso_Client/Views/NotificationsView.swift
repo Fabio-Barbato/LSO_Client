@@ -17,14 +17,12 @@ struct NotificationsView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                // Titolo
                 Text("Notifications")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(Color("Color"))
                     .padding(.top, 40)
 
-                // Lista delle notifiche
                 if notifications.isEmpty {
                     Text("You have no notifications.")
                         .font(.title2)
